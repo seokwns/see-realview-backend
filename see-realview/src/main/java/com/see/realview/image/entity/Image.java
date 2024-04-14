@@ -6,20 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(
-        name = "image_tb",
-        indexes = {
-                @Index(columnList = "link")
-        })
+@Table(name = "image_tb")
 @Getter
 @NoArgsConstructor
 public class Image {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(unique = true, nullable = false, length = 500)
+    @Column(length = 500)
     private String link;
 
     @Column(nullable = false)
@@ -30,8 +23,7 @@ public class Image {
 
 
     @Builder
-    public Image(Long id, String link, Boolean advertisement, Long count) {
-        this.id = id;
+    public Image(String link, Boolean advertisement, Long count) {
         this.link = link;
         this.advertisement = advertisement;
         this.count = count;
