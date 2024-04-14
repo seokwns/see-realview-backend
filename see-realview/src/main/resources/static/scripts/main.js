@@ -1,4 +1,5 @@
 let loading = false;
+let bug = false;
 let timer;
 
 
@@ -12,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (keyword !== "" && !loading) {
                 searchContainer.innerHTML = '';
                 loading = true;
+                bug = false;
                 searchApiRequest(keyword, 1);
             }
             event.target.blur();
@@ -24,7 +26,7 @@ window.addEventListener('scroll', function () {
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
 
-    if (scrollHeight - scrollTop - 2000 <= clientHeight && !loading) {
+    if (scrollHeight - scrollTop - 2000 <= clientHeight && !loading && !bug) {
         const keyword = document.getElementById('search-input').value;
         const cursor = localStorage.getItem("cursor");
 
@@ -40,7 +42,8 @@ window.addEventListener('scroll', function () {
 
 
 function searchApiRequest(keyword, cursor) {
-    if (keyword == null || keyword === "" || cursor == null) {
+    if (keyword == null || keyword === "" || cursor == null || bug) {
+        loading = false;
         return;
     }
 
@@ -53,6 +56,7 @@ function searchApiRequest(keyword, cursor) {
             if (response.status === 500) {
                 alert("서버에서 에러가 발생했습니다. \n빠른 시일 내에 고치겠습니다. \n불편을 드려 죄송합니다.");
                 sendBugReport(keyword, cursor);
+                bug = true;
             }
 
             return response.json();
