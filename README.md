@@ -5,6 +5,12 @@
 </br>
 
 ## 변경 로그 요약
+### v1.3
+- 비동기 로직 추가
+- 분석 빈도수가 높은 url에 대한 필터 추가
+- 검색 실패 알림 추가
+- 캐싱 버그 수정
+
 ### v1.2
 - 포스트 이미지 미리보기 기능 구현
 - 타임리프 템플릿 스타일 수정
@@ -85,6 +91,8 @@ $ java -jar see-realview-0.0.1-SNAPSHOT.jar
 - 2024.01.10 : MVP 구현 완료 및 배포 [#30](https://github.com/see-realview/see-realview-backend/issues/30)
 - 2024.01.14 : 이미지 분석 결과 캐싱 오류 수정 [#32](https://github.com/see-realview/see-realview-backend/issues/32)
 - 2024.01.15 : 포스트 이미지 미리보기 구현 [#36](https://github.com/see-realview/see-realview-backend/pull/36)
+- 2024.01.22 : 메서드 비동기 적용 [#40](https://github.com/see-realview/see-realview-backend/issues/40)
+- 2024.01.22 : well-known-urls 필터 구현 [#41](https://github.com/see-realview/see-realview-backend/issues/41)
 
 </br>
 
