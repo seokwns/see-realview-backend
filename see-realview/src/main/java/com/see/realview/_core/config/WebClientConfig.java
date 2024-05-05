@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.SSLException;
@@ -67,7 +68,7 @@ public class WebClientConfig {
                             .codecs(clientCodecConfigurer -> clientCodecConfigurer.defaultCodecs().maxInMemorySize(100 * 1024 * 1024))
                             .build())
                     .build();
-        } catch (SSLException exception) {
+        } catch (SSLException | WebClientResponseException exception) {
             throw new ServerException(ExceptionStatus.IMAGE_PARSING_ERROR);
         }
     }

@@ -2,15 +2,17 @@ package com.see.realview._core.security;
 
 import com.see.realview.user.entity.UserAccount;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public record CustomUserDetails(UserAccount userAccount) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singleton(new SimpleGrantedAuthority(userAccount.getRole().getRoleName()));
     }
 
     @Override
