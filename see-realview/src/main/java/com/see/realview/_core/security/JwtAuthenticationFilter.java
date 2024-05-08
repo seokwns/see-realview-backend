@@ -48,7 +48,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         }
 
         DecodedJWT decodedJWT = jwtProvider.verifyAccessToken(accessToken);
-        Long userAccountId = decodedJWT.getClaim("id").asLong();
+        String userAccountEmail = decodedJWT.getClaim("email").asString();
 
         if (request.getRequestURI().contains("/token/refresh")) {
             if (refreshToken == null) {
@@ -59,8 +59,8 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
                 throw new UnauthorizedException(ExceptionStatus.ACCESS_TOKEN_NOT_EXPIRED);
             }
 
-            Token token = tokenService.findTokenById(userAccountId);
-            tokenService.deleteById(userAccountId);
+            Token token = tokenService.findTokenByEmail(userAccountEmail);
+            tokenService.deleteByEmail(userAccountEmail);
 
             if (!token.equals(accessToken, refreshToken)) {
                 throw new UnauthorizedException(ExceptionStatus.TOKEN_PAIR_NOT_MATCH);
@@ -72,7 +72,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             }
         }
 
-        setAuthentication(userAccountId);
+        setAuthentication(userAccountEmail);
         chain.doFilter(request, response);
     }
 
@@ -86,8 +86,8 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         return content.substring(7);
     }
 
-    private void setAuthentication(Long userAccountId) {
-        UserAccount userAccount = UserAccount.builder().id(userAccountId).build();
+    private void setAuthentication(String userAccountEmail) {
+        UserAccount userAccount = UserAccount.builder().email(userAccountEmail).build();
         CustomUserDetails userDetails = new CustomUserDetails(userAccount);
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 userDetails,

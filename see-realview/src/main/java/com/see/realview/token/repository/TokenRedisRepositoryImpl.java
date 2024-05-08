@@ -34,8 +34,8 @@ public class TokenRedisRepositoryImpl implements TokenRedisRepository {
     }
 
     @Override
-    public Optional<Token> findTokenById(Long id) {
-        String key = getKeyById(id);
+    public Optional<Token> findTokenByEmail(String email) {
+        String key = getKeyById(email);
         String value = valueOperations.get(key);
 
         if (value == null) {
@@ -47,26 +47,26 @@ public class TokenRedisRepositoryImpl implements TokenRedisRepository {
     }
 
     @Override
-    public void save(Long id, Token token) {
-        String key = getKeyById(id);
+    public void save(String email, Token token) {
+        String key = getKeyById(email);
         String value = getValue(token);
         valueOperations.set(key, value, TOKEN_EXP);
     }
 
     @Override
-    public void deleteById(Long id) {
-        String key = getKeyById(id);
+    public void deleteById(String email) {
+        String key = getKeyById(email);
         redisTemplate.delete(key);
     }
 
     @Override
-    public boolean isTokenExists(Long id) {
-        String key = getKeyById(id);
+    public boolean isTokenExists(String email) {
+        String key = getKeyById(email);
         return valueOperations.get(key) != null;
     }
 
-    private static String getKeyById(Long id) {
-        return TOKEN_PREFIX + id;
+    private static String getKeyById(String email) {
+        return TOKEN_PREFIX + email;
     }
 
     private String getValue(Token token) {

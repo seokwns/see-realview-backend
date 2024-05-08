@@ -5,11 +5,11 @@ import com.see.realview.user.entity.UserAccount;
 
 public interface TokenService {
 
-    Token findTokenById(Long id);
+    Token findTokenByEmail(String email);
 
-    void save(Long id, Token token);
+    void save(String email, Token token);
 
     Token refresh(UserAccount userAccount);
 
-    void deleteById(Long id);
+    void deleteByEmail(String email);
 }

@@ -6,11 +6,11 @@ import java.util.Optional;
 
 public interface TokenRedisRepository {
 
-    Optional<Token> findTokenById(Long id);
+    Optional<Token> findTokenByEmail(String email);
 
-    void save(Long id, Token token);
+    void save(String email, Token token);
 
-    void deleteById(Long id);
+    void deleteById(String email);
 
-    boolean isTokenExists(Long id);
+    boolean isTokenExists(String email);
 }

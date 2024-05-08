@@ -3,8 +3,6 @@ package com.see.realview._core.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.exceptions.SignatureVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.see.realview.user.entity.UserAccount;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +40,7 @@ public class JwtProvider {
         return JWT.create()
                 .withSubject(user.getEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis() + expire))
-                .withClaim("id", user.getId())
+                .withClaim("email", user.getEmail())
                 .sign(Algorithm.HMAC512(secret));
     }
 

@@ -25,18 +25,18 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public Token findTokenById(Long id) {
-        return tokenRedisRepository.findTokenById(id)
+    public Token findTokenByEmail(String email) {
+        return tokenRedisRepository.findTokenByEmail(email)
                 .orElseThrow(() -> new NotFoundException(ExceptionStatus.TOKEN_NOT_FOUND));
     }
 
     @Override
-    public void save(Long id, Token token) {
-        if (tokenRedisRepository.isTokenExists(id)) {
-            deleteById(id);
+    public void save(String email, Token token) {
+        if (tokenRedisRepository.isTokenExists(email)) {
+            deleteByEmail(email);
         }
 
-        tokenRedisRepository.save(id, token);
+        tokenRedisRepository.save(email, token);
     }
 
     @Override
@@ -45,13 +45,13 @@ public class TokenServiceImpl implements TokenService {
         String refreshToken = jwtProvider.createRefreshToken(userAccount);
 
         Token token = new Token(accessToken, refreshToken);
-        save(userAccount.getId(), token);
+        save(userAccount.getEmail(), token);
 
         return token;
     }
 
     @Override
-    public void deleteById(Long id) {
-        tokenRedisRepository.deleteById(id);
+    public void deleteByEmail(String email) {
+        tokenRedisRepository.deleteById(email);
     }
 }
