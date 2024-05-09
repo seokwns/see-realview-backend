@@ -55,7 +55,7 @@ public class SearchController {
         CompletableFuture<NaverSearchResponse> searchFuture = naverSearcher.search(request);
         CompletableFuture<AnalyzeResponse> response = searchFuture.thenCompose(postAnalyzer::analyze);
         UserAccount userAccount = userDetails.userAccount();
-        searchHistoryService.save(userAccount, keyword);
+        searchHistoryService.save(userAccount, keyword, cursor);
 
         return response.thenApply(result -> ResponseEntity.ok().body(Response.success(result)));
     }

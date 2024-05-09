@@ -20,8 +20,8 @@ public class SearchHistoryServiceImpl implements SearchHistoryService {
     }
 
     @Override
-    public void save(UserAccount userAccount, String keyword) {
-        if (userAccount == null) {
+    public void save(UserAccount userAccount, String keyword, Long cursor) {
+        if (userAccount == null || cursor != 1) {
             return;
         }
 

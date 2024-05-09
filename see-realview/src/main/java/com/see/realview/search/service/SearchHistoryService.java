@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SearchHistoryService {
 
-    void save(UserAccount userAccount, String keyword);
+    void save(UserAccount userAccount, String keyword, Long cursor);
 
     List<SearchHistoryDto> findLatestHistories(UserAccount userAccount);
 }
