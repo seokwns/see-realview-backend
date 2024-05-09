@@ -49,6 +49,9 @@ public class PostAnalyzer {
 
     @Async
     public CompletableFuture<AnalyzeResponse> analyze(NaverSearchResponse searchResponse) {
+        if (Objects.equals(searchResponse.total(), searchResponse.start())) {
+            return CompletableFuture.completedFuture(null);
+        }
         List<AnalyzeRequest> analyzeRequests = requestConverter.createPostAnalyzeRequest(searchResponse);
         Map<String, Boolean> result = new HashMap<>();
         Map<String, List<String>> imageMap = new HashMap<>();
