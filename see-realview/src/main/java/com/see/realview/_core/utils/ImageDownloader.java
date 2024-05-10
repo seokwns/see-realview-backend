@@ -29,7 +29,7 @@ public class ImageDownloader {
         byte[] imageBytes = imageMono.block();
 
         if (imageBytes == null || imageBytes.length == 0) {
-            log.debug("이미지 다운로드 실패 | " + url);
+            log.error("이미지 다운로드 실패 | " + url);
             return "";
         }
 

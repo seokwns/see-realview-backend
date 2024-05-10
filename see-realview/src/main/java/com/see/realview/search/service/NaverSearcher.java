@@ -31,7 +31,7 @@ public class NaverSearcher {
     @Async
     public CompletableFuture<NaverSearchResponse> search(KeywordSearchRequest request) {
         if (request.keyword().isEmpty() || request.cursor() == null) {
-            log.debug("keyword 또는 cursor 누락됨 | " + request.keyword() + " | " + request.cursor());
+            log.error("keyword 또는 cursor 누락됨 | " + request.keyword() + " | " + request.cursor());
             throw new BadRequestException(ExceptionStatus.KEYWORD_IS_EMPTY);
         }
 
