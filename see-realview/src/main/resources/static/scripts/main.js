@@ -2,6 +2,8 @@ let loading = false;
 let bug = false;
 let timer;
 
+const CURSOR_END = -1;
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById('search-input');
@@ -104,6 +106,10 @@ function updateSearchResults(responseData) {
     const searchContainer = document.querySelector('.search-container');
 
     if (responseData.success && responseData.contents.data) {
+        if (responseData.contents.cursor == null) {
+            localStorage.setItem("cursor", CURSOR_END.toString());
+            return;
+        }
         localStorage.setItem("cursor", responseData.contents.cursor);
         responseData.contents.data.forEach(function (item) {
             const listItem = document.createElement('div');
@@ -111,31 +117,6 @@ function updateSearchResults(responseData) {
 
             const imagesContainer = document.createElement('div');
             imagesContainer.classList.add('images-container');
-
-            // const leftArrow = document.createElement('button');
-            // leftArrow.innerHTML = '&#9665;';
-            // leftArrow.classList.add('arrow-button', 'left-arrow');
-            //
-            // const rightArrow = document.createElement('button');
-            // rightArrow.innerHTML = '&#9655;';
-            // rightArrow.classList.add('arrow-button', 'right-arrow');
-            //
-            // leftArrow.addEventListener('click', function () {
-            //     imagesContainer.scrollBy({
-            //         left: -500,
-            //         behavior: 'smooth'
-            //     });
-            // });
-            //
-            // rightArrow.addEventListener('click', function () {
-            //     imagesContainer.scrollBy({
-            //         left: 500,
-            //         behavior: 'smooth'
-            //     });
-            // });
-            //
-            // listItem.appendChild(leftArrow);
-            // listItem.appendChild(rightArrow);
 
             if (item.images != null) {
                 item.images.forEach(function (imageUrl) {
